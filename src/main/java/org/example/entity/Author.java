@@ -20,7 +20,7 @@ public class Author {
 
     private String name;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private AuthorDetails authorDetails;
 
