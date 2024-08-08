@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="1" author="Denis Anisimov">
+        <createTable tableName="author_details">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="life_years" type="VARCHAR(255)"/>
+            <column name="brief_biography" type="TEXT"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2" author="Denis Anisimov">
+        <createTable tableName="author">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="author_details_id" type="BIGINT">
+                <constraints unique="true"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="author"
+                                 baseColumnNames="author_details_id"
+                                 constraintName="fk_author_author_details"
+                                 referencedTableName="author_details"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="3" author="Denis Anisimov">
+        <createTable tableName="book">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="title" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="TEXT"/>
+            <column name="author_id" type="BIGINT"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="book"
+                                 baseColumnNames="author_id"
+                                 constraintName="fk_book_author"
+                                 referencedTableName="author"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="4" author="Denis Anisimov">
+        <createTable tableName="genre">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="5" author="Denis Anisimov">
+        <createTable tableName="book_genre">
+            <column name="book_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="genre_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="book_genre"
+                                 baseColumnNames="book_id"
+                                 constraintName="fk_book_genre_book"
+                                 referencedTableName="book"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="book_genre"
+                                 baseColumnNames="genre_id"
+                                 constraintName="fk_book_genre_genre"
+                                 referencedTableName="genre"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+</databaseChangeLog>
