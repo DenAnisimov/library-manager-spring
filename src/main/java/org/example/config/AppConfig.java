@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.beans.factory.annotation.Value;
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
@@ -17,6 +18,7 @@ import java.util.Properties;
 @Configuration
 @PropertySource("classpath:database.properties")
 @ComponentScan(basePackages = "org.example")
+@EnableJpaRepositories(basePackages = "org.example.repository")
 public class AppConfig {
 
     @Value("${db.driverClassName}")
