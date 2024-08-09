@@ -1,16 +1,11 @@
 package org.example.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
+
+import java.util.Objects;
 
 @Entity
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@SuperBuilder
+@Table(name = "author_details")
 public class AuthorDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,4 +16,54 @@ public class AuthorDetails {
 
     @Column(name = "brief_biography")
     private String briefBiography;
+
+    public AuthorDetails() {
+    }
+
+    public AuthorDetails(Long id, String lifeYears, String briefBiography) {
+        this.id = id;
+        this.lifeYears = lifeYears;
+        this.briefBiography = briefBiography;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getLifeYears() {
+        return lifeYears;
+    }
+
+    public void setLifeYears(String lifeYears) {
+        this.lifeYears = lifeYears;
+    }
+
+    public String getBriefBiography() {
+        return briefBiography;
+    }
+
+    public void setBriefBiography(String briefBiography) {
+        this.briefBiography = briefBiography;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof AuthorDetails that)) return false;
+        return Objects.equals(id, that.id) && Objects.equals(lifeYears, that.lifeYears) && Objects.equals(briefBiography, that.briefBiography);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, lifeYears, briefBiography);
+    }
+
+    @Override
+    public String toString() {
+        return "AuthorDetails{" +
+                "id=" + id +
+                ", lifeYears='" + lifeYears + '\'' +
+                ", briefBiography='" + briefBiography + '\'' +
+                '}';
+    }
 }
