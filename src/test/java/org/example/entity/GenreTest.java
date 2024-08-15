@@ -2,39 +2,47 @@ package org.example.entity;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.HashSet;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-class GenreTest {
+ class GenreTest {
 
     @Test
-    void testGenreNoArgsConstructor() {
-        Genre genre = new Genre();
-        assertNotNull(genre);
+     void testEquals() {
+        Genre genre1 = new Genre("Fantasy");
+
+        Genre genre2 = new Genre("Fantasy");
+
+        Genre genre3 = new Genre("Science Fiction");
+
+        assertEquals(genre1, genre2);
+        assertNotEquals(genre1, genre3);
+        assertNotEquals(null, genre1);
+        assertNotEquals(genre1, new Object());
     }
 
     @Test
-    void testGenreAllArgsConstructor() {
-        Genre genre = new Genre(1L, "Fantasy", new HashSet<>());
+     void testHashCode() {
+        Genre genre1 = new Genre("Fantasy");
 
-        assertNotNull(genre);
-        assertEquals(1L, genre.getId());
-        assertEquals("Fantasy", genre.getName());
-        assertNotNull(genre.getBooks());
+        Genre genre2 = new Genre("Fantasy");
+
+        Genre genre3 = new Genre("Science Fiction");
+
+        assertEquals(genre1.hashCode(), genre2.hashCode());
+        assertNotEquals(genre1.hashCode(), genre3.hashCode());
     }
 
     @Test
-    void testGenreBuilder() {
-        Genre genre = Genre.builder()
-                .id(1L)
-                .name("Fantasy")
-                .books(new HashSet<>())
-                .build();
+     void testToString() {
+        Genre genre = new Genre("Fantasy");
 
-        assertNotNull(genre);
-        assertEquals(1L, genre.getId());
-        assertEquals("Fantasy", genre.getName());
-        assertNotNull(genre.getBooks());
+        String expectedString = "Genre{" +
+                "id=null" +
+                ", name='Fantasy'" +
+                ", books=[]" +
+                '}';
+
+        assertEquals(expectedString, genre.toString());
     }
 }

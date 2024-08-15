@@ -2,47 +2,56 @@ package org.example.entity;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.HashSet;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class BookTest {
 
     @Test
-    void testBookNoArgsConstructor() {
-        Book book = new Book();
-        assertNotNull(book);
+    void testEquals() {
+        Author author1 = new Author("Author Name", new AuthorDetails("1950-2000", "Biography 1"));
+        Author author2 = new Author("Author Name", new AuthorDetails("1950-2000", "Biography 1"));
+
+        Book book1 = new Book("Book Title", "Book Description", author1);
+
+        Book book2 = new Book("Book Title", "Book Description", author2);
+
+        Book book3 = new Book("Different Title", "Different Description", author1);
+
+        assertEquals(book1, book2);
+        assertNotEquals(book1, book3);
+        assertNotEquals(null, book1);
+        assertNotEquals(book1, new Object());
     }
 
     @Test
-    void testBookAllArgsConstructor() {
-        Author author = new Author(1L, "J.K. Rowling", null, null);
-        Book book = new Book(1L, "Harry Potter", "A wizard boy", author, new HashSet<>());
+    void testHashCode() {
+        Author author1 = new Author("Author Name", new AuthorDetails("1950-2000", "Biography 1"));
+        Author author2 = new Author("Author Name", new AuthorDetails("1950-2000", "Biography 1"));
 
-        assertNotNull(book);
-        assertEquals(1L, book.getId());
-        assertEquals("Harry Potter", book.getTitle());
-        assertEquals("A wizard boy", book.getDescription());
-        assertEquals(author, book.getAuthor());
-        assertNotNull(book.getGenres());
+        Book book1 = new Book("Book Title", "Book Description", author1);
+
+        Book book2 = new Book("Book Title", "Book Description", author2);
+
+        Book book3 = new Book("Different Title", "Different Description", author1);
+
+        assertEquals(book1.hashCode(), book2.hashCode());
+        assertNotEquals(book1.hashCode(), book3.hashCode());
     }
 
     @Test
-    void testBookBuilder() {
-        Author author = Author.builder().id(1L).name("J.K. Rowling").build();
-        Book book = Book.builder()
-                .id(1L)
-                .title("Harry Potter")
-                .description("A wizard boy")
-                .author(author)
-                .genres(new HashSet<>())
-                .build();
+    void testToString() {
+        Author author = new Author("Author Name", new AuthorDetails("1950-2000", "Biography 1"));
+        Book book = new Book("Book Title", "Book Description", author);
 
-        assertNotNull(book);
-        assertEquals(1L, book.getId());
-        assertEquals("Harry Potter", book.getTitle());
-        assertEquals("A wizard boy", book.getDescription());
-        assertEquals(author, book.getAuthor());
-        assertNotNull(book.getGenres());
+        String expectedString = "Book{" +
+                "id=null" +
+                ", title='Book Title'" +
+                ", description='Book Description'" +
+                ", authorId=" + author.getId() +
+                ", genres=[]" +
+                '}';
+
+        assertEquals(expectedString, book.toString());
     }
 }
