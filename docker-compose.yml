@@ -1,0 +1,43 @@
+  version: "3.9"
+
+  services:
+    postgres:
+      image: postgres:latest
+      hostname: postgres
+      environment:
+        # libqp env var for healthcheck
+        - PGUSER=postgres
+        - POSTGRES_PASSWORD=secret
+        - POSTGRES_HOST_AUTH_METHOD=trust
+      ports:
+        - 5432:5432
+      healthcheck:
+        test: pg_isready
+        interval: 1s
+        retries: 5
+        start_period: 1s
+        timeout: 10s
+
+    rabbit:
+      image: rabbitmq:3.8-management-alpine
+      environment:
+        RABBITMQ_DEFAULT_USER: "guest"
+        RABBITMQ_DEFAULT_PASS: "guest"
+      ports:
+        - 5672:5672
+        # management plugin
+        - 15671:15671
+        - 15672:15672
+      healthcheck:
+        test: rabbitmq-diagnostics ping
+        interval: 1s
+        retries: 5
+        start_period: 1s
+        timeout: 10s
+
+    redis:
+      image: redis:6.2-alpine
+      command: redis-server --maxmemory 64Mb
+      restart: "no"
+      ports:
+        - 6379:6379
