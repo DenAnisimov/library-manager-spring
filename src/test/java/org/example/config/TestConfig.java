@@ -1,25 +1,26 @@
 package org.example.config;
 
+import javax.sql.DataSource;
+
 import liquibase.integration.spring.SpringLiquibase;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.beans.factory.annotation.Value;
-import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.transaction.PlatformTransactionManager;
 
-import javax.sql.DataSource;
+import java.util.Objects;
 import java.util.Properties;
 
 @Configuration
 @PropertySource("classpath:database.properties")
-@ComponentScan(basePackages = "org.example")
 @EnableJpaRepositories(basePackages = "org.example.repository")
-public class AppConfig {
+public class TestConfig {
 
     @Value("${db.driverClassName}")
     private String driverClassName;
@@ -35,7 +36,7 @@ public class AppConfig {
 
     @Bean
     public DataSource dataSource() {
-        BasicDataSource dataSource = new BasicDataSource();
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(driverClassName);
         dataSource.setUrl(url);
         dataSource.setUsername(username);
@@ -69,9 +70,7 @@ public class AppConfig {
     }
 
     @Bean
-    public JpaTransactionManager transactionManager() {
-        JpaTransactionManager transactionManager = new JpaTransactionManager();
-        transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
-        return transactionManager;
+    public PlatformTransactionManager transactionManager() {
+        return new JpaTransactionManager(Objects.requireNonNull(entityManagerFactory().getObject()));
     }
 }

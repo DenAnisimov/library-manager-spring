@@ -2,50 +2,45 @@ package org.example.entity;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class AuthorTest {
 
     @Test
-    void testAuthorNoArgsConstructor() {
-        Author author = new Author();
-        assertNotNull(author);
+    void testEquals() {
+        Author author1 = new Author("Author Name", new AuthorDetails());
+        Author author2 = new Author("Author Name", new AuthorDetails());
+        Author author3 = new Author("Different Author", new AuthorDetails());
+
+        assertEquals(author1, author2);
+        assertNotEquals(author1, author3);
+        assertNotEquals(null, author1);
+        assertNotEquals(author1, new Object());
     }
 
     @Test
-    void testAuthorAllArgsConstructor() {
-        AuthorDetails authorDetails = new AuthorDetails(1L, "1965-", "Biography");
-        Author author = new Author(1L, "J.K. Rowling", authorDetails, new ArrayList<>());
+    void testHashCode() {
+        Author author1 = new Author("Author Name", new AuthorDetails());
+        Author author2 = new Author("Author Name", new AuthorDetails());
+        Author author3 = new Author("Different Author", new AuthorDetails());
 
-        assertNotNull(author);
-        assertEquals(1L, author.getId());
-        assertEquals("J.K. Rowling", author.getName());
-        assertEquals(authorDetails, author.getAuthorDetails());
-        assertNotNull(author.getBooks());
+        assertEquals(author1.hashCode(), author2.hashCode());
+        assertNotEquals(author1.hashCode(), author3.hashCode());
     }
 
     @Test
-    void testAuthorBuilder() {
-        Author author = Author.builder()
-                .id(1L)
-                .name("J.K. Rowling")
-                .authorDetails(AuthorDetails.builder()
-                        .id(1L)
-                        .lifeYears("1965-")
-                        .briefBiography("Biography")
-                        .build())
-                .books(new ArrayList<>())
-                .build();
+    void testToString() {
+        AuthorDetails authorDetails = new AuthorDetails();
+        Author author = new Author("Author Name", authorDetails);
 
-        assertNotNull(author);
-        assertEquals(1L, author.getId());
-        assertEquals("J.K. Rowling", author.getName());
-        assertNotNull(author.getAuthorDetails());
-        assertEquals(1L, author.getAuthorDetails().getId());
-        assertEquals("1965-", author.getAuthorDetails().getLifeYears());
-        assertEquals("Biography", author.getAuthorDetails().getBriefBiography());
-        assertNotNull(author.getBooks());
+        String expectedString = "Author{" +
+                "id=null" +
+                ", name='Author Name'" +
+                ", authorDetails=" + authorDetails +
+                ", books=[]" +
+                '}';
+
+        assertEquals(expectedString, author.toString());
     }
 }

@@ -2,37 +2,43 @@ package org.example.entity;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class AuthorDetailsTest {
 
     @Test
-    void testAuthorDetailsNoArgsConstructor() {
-        AuthorDetails authorDetails = new AuthorDetails();
-        assertNotNull(authorDetails);
+    void testEquals() {
+        AuthorDetails details1 = new AuthorDetails("1950-2000", "Biography 1");
+        AuthorDetails details2 = new AuthorDetails("1950-2000", "Biography 1");
+        AuthorDetails details3 = new AuthorDetails("1900-2000", "Biography 2");
+
+        assertEquals(details1, details2);
+        assertNotEquals(details1, details3);
+        assertNotEquals(null, details1);
+        assertNotEquals(details1, new Object());
     }
 
     @Test
-    void testAuthorDetailsAllArgsConstructor() {
-        AuthorDetails authorDetails = new AuthorDetails(1L, "1965-", "Biography");
+    void testHashCode() {
+        AuthorDetails details1 = new AuthorDetails("1950-2000", "Biography 1");
+        AuthorDetails details2 = new AuthorDetails("1950-2000", "Biography 1");
+        AuthorDetails details3 = new AuthorDetails("1900-2000", "Biography 2");
 
-        assertNotNull(authorDetails);
-        assertEquals(1L, authorDetails.getId());
-        assertEquals("1965-", authorDetails.getLifeYears());
-        assertEquals("Biography", authorDetails.getBriefBiography());
+        assertEquals(details1.hashCode(), details2.hashCode());
+        assertNotEquals(details1.hashCode(), details3.hashCode());
     }
 
     @Test
-    void testAuthorDetailsBuilder() {
-        AuthorDetails authorDetails = AuthorDetails.builder()
-                .id(1L)
-                .lifeYears("1965-")
-                .briefBiography("Biography")
-                .build();
+    void testToString() {
+        AuthorDetails details = new AuthorDetails("1950-2000", "Biography 1");
 
-        assertNotNull(authorDetails);
-        assertEquals(1L, authorDetails.getId());
-        assertEquals("1965-", authorDetails.getLifeYears());
-        assertEquals("Biography", authorDetails.getBriefBiography());
+        String expectedString = "AuthorDetails{" +
+                "id=null" +
+                ", lifeYears='1950-2000'" +
+                ", briefBiography='Biography 1'" +
+                '}';
+
+        assertEquals(expectedString, details.toString());
     }
 }
