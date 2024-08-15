@@ -1,6 +1,7 @@
 package org.example.config;
 
 import liquibase.integration.spring.SpringLiquibase;
+import org.apache.commons.dbcp2.BasicDataSource;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
@@ -32,13 +33,13 @@ class AppConfigTest {
     @Test
     void testDataSource() {
         assertNotNull(dataSource, "DataSource should not be null");
-        assertTrue(dataSource instanceof org.apache.commons.dbcp2.BasicDataSource, "DataSource should be of type BasicDataSource");
+        assertInstanceOf(BasicDataSource.class, dataSource, "DataSource should be of type BasicDataSource");
 
         org.apache.commons.dbcp2.BasicDataSource ds = (org.apache.commons.dbcp2.BasicDataSource) dataSource;
         assertEquals("org.postgresql.Driver", ds.getDriverClassName(), "Driver class name should be set correctly");
-        assertEquals("jdbc:postgresql://localhost:5433/library_manager", ds.getUrl(), "URL should be set correctly");
+        assertEquals("jdbc:postgresql://localhost:5432/library_manager", ds.getUrl(), "URL should be set correctly");
         assertEquals("postgres", ds.getUserName(), "Username should be set correctly");
-        assertEquals("12345", ds.getPassword(), "Password should be set correctly");
+        assertEquals("secret", ds.getPassword(), "Password should be set correctly");
     }
 
     @Test
