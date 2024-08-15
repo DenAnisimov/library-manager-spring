@@ -2,6 +2,7 @@ package org.example.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -21,12 +22,13 @@ public class Author {
     private List<Book> books;
 
     public Author() {
+        books = new ArrayList<>();
     }
 
-    public Author(Long id, String name, AuthorDetails authorDetails) {
-        this.id = id;
+    public Author(String name, AuthorDetails authorDetails) {
         this.name = name;
         this.authorDetails = authorDetails;
+        books = new ArrayList<>();
     }
 
     public Long getId() {
@@ -57,12 +59,12 @@ public class Author {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Author author)) return false;
-        return Objects.equals(id, author.id) && Objects.equals(name, author.name) && Objects.equals(authorDetails, author.authorDetails) && Objects.equals(books, author.books);
+        return Objects.equals(id, author.id) && Objects.equals(name, author.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, authorDetails, books);
+        return Objects.hash(id, name);
     }
 
     @Override
@@ -70,7 +72,7 @@ public class Author {
         return "Author{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", authorDetails=" + authorDetails +
+                ", authorDetails=" + (authorDetails != null ? authorDetails.toString() : "null") +
                 ", books=" + books +
                 '}';
     }

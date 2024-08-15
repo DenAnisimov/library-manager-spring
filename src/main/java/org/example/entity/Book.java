@@ -2,6 +2,7 @@ package org.example.entity;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -20,7 +21,7 @@ public class Book {
     @JoinColumn(name = "author_id")
     private Author author;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "book_genre",
             joinColumns = @JoinColumn(name = "book_id"),
@@ -28,13 +29,15 @@ public class Book {
     )
     private Set<Genre> genres;
 
-    public Book() {}
+    public Book() {
+        genres = new HashSet<>();
+    }
 
-    public Book(Long id, String title, String description, Author author) {
-        this.id = id;
+    public Book(String title, String description, Author author) {
         this.title = title;
         this.description = description;
         this.author = author;
+        genres = new HashSet<>();
     }
 
     public Long getId() {
@@ -73,12 +76,12 @@ public class Book {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Book book)) return false;
-        return Objects.equals(id, book.id) && Objects.equals(title, book.title) && Objects.equals(description, book.description) && Objects.equals(author, book.author) && Objects.equals(genres, book.genres);
+        return Objects.equals(id, book.id) && Objects.equals(title, book.title) && Objects.equals(description, book.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, description, author, genres);
+        return Objects.hash(id, title, description);
     }
 
     @Override
@@ -87,7 +90,7 @@ public class Book {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
-                ", author=" + author +
+                ", authorId=" + (author != null ? author.getId() : "null") +
                 ", genres=" + genres +
                 '}';
     }

@@ -20,8 +20,7 @@ public class AuthorDetails {
     public AuthorDetails() {
     }
 
-    public AuthorDetails(Long id, String lifeYears, String briefBiography) {
-        this.id = id;
+    public AuthorDetails(String lifeYears, String briefBiography) {
         this.lifeYears = lifeYears;
         this.briefBiography = briefBiography;
     }

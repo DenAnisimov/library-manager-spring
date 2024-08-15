@@ -2,6 +2,7 @@ package org.example.entity;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -14,14 +15,16 @@ public class Genre {
 
     private String name;
 
-    @ManyToMany(mappedBy = "genres")
+    @ManyToMany(mappedBy = "genres", fetch = FetchType.EAGER)
     private Set<Book> books;
 
     public Genre() {
+        books = new HashSet<>();
     }
 
     public Genre(String name) {
         this.name = name;
+        books = new HashSet<>();
     }
 
     public Long getId() {
@@ -44,12 +47,12 @@ public class Genre {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Genre genre)) return false;
-        return Objects.equals(id, genre.id) && Objects.equals(name, genre.name) && Objects.equals(books, genre.books);
+        return Objects.equals(id, genre.id) && Objects.equals(name, genre.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, books);
+        return Objects.hash(id, name);
     }
 
     @Override
