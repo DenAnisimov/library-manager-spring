@@ -31,6 +31,10 @@ public class Genre {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
@@ -41,6 +45,10 @@ public class Genre {
 
     public Set<Book> getBooks() {
         return books;
+    }
+
+    public void setBooks(Set<Book> books) {
+        this.books = books;
     }
 
     @Override

@@ -27,6 +27,14 @@ public class BookGenre {
         this.genre = genre;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public Book getBook() {
         return book;
     }
@@ -41,14 +49,6 @@ public class BookGenre {
 
     public void setGenre(Genre genre) {
         this.genre = genre;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     @Override
