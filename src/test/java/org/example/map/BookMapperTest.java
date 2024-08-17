@@ -19,7 +19,7 @@ import static org.mockito.Mockito.when;
 class BookMapperTest {
 
     @InjectMocks
-    private BookMapperImpl bookMapper;  // Реализация будет подставлена
+    private BookMapperImpl bookMapper;
 
     @Mock
     private AuthorMapper authorMapper;
