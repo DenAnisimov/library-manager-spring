@@ -1,30 +1,23 @@
-package org.example.entity;
-
-import jakarta.persistence.*;
+package org.example.dto;
 
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-@Entity
-public class Genre {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class GenreDTO {
     private Long id;
 
     private String name;
 
-    @ManyToMany(mappedBy = "genres", fetch = FetchType.EAGER)
-    private Set<Book> books;
+    private Set<BookDTO> bookDTOs;
 
-    public Genre() {
-        books = new HashSet<>();
+    public GenreDTO() {
+        bookDTOs = new HashSet<>();
     }
 
-    public Genre(String name) {
+    public GenreDTO(String name) {
         this.name = name;
-        books = new HashSet<>();
+        bookDTOs = new HashSet<>();
     }
 
     public Long getId() {
@@ -43,19 +36,19 @@ public class Genre {
         this.name = name;
     }
 
-    public Set<Book> getBooks() {
-        return books;
+    public Set<BookDTO> getBookDTOs() {
+        return bookDTOs;
     }
 
-    public void setBooks(Set<Book> books) {
-        this.books = books;
+    public void setBookDTOs(Set<BookDTO> bookDTOs) {
+        this.bookDTOs = bookDTOs;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Genre genre)) return false;
-        return Objects.equals(id, genre.id) && Objects.equals(name, genre.name);
+        if (!(o instanceof GenreDTO genreDTO)) return false;
+        return Objects.equals(id, genreDTO.id) && Objects.equals(name, genreDTO.name);
     }
 
     @Override
@@ -65,10 +58,10 @@ public class Genre {
 
     @Override
     public String toString() {
-        return "Genre{" +
+        return "GenreDTO{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", books=" + books +
+                ", booksDTOs=" + bookDTOs +
                 '}';
     }
 }

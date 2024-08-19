@@ -1,33 +1,25 @@
-package org.example.entity;
-
-import jakarta.persistence.*;
+package org.example.dto;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@Entity
-public class Author {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class AuthorDTO {
     private Long id;
 
     private String name;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "author_details_id")
-    private AuthorDetails authorDetails;
+    private AuthorDetailsDTO authorDetailsDTO;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "author", orphanRemoval = true, fetch = FetchType.EAGER)
-    private List<Book> books;
+    private List<BookDTO> books;
 
-    public Author() {
+    public AuthorDTO() {
         books = new ArrayList<>();
     }
 
-    public Author(String name, AuthorDetails authorDetails) {
+    public AuthorDTO(String name, AuthorDetailsDTO authorDetails) {
         this.name = name;
-        this.authorDetails = authorDetails;
+        this.authorDetailsDTO = authorDetails;
         books = new ArrayList<>();
     }
 
@@ -47,26 +39,26 @@ public class Author {
         this.name = name;
     }
 
-    public AuthorDetails getAuthorDetails() {
-        return authorDetails;
+    public AuthorDetailsDTO getAuthorDetailsDTO() {
+        return authorDetailsDTO;
     }
 
-    public void setAuthorDetails(AuthorDetails authorDetails) {
-        this.authorDetails = authorDetails;
+    public void setAuthorDetailsDTO(AuthorDetailsDTO authorDetailsDTO) {
+        this.authorDetailsDTO = authorDetailsDTO;
     }
 
-    public List<Book> getBooks() {
+    public List<BookDTO> getBooks() {
         return books;
     }
 
-    public void setBooks(List<Book> books) {
+    public void setBooks(List<BookDTO> books) {
         this.books = books;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Author author)) return false;
+        if (!(o instanceof AuthorDTO author)) return false;
         return Objects.equals(id, author.id) && Objects.equals(name, author.name);
     }
 
@@ -77,10 +69,10 @@ public class Author {
 
     @Override
     public String toString() {
-        return "Author{" +
+        return "AuthorDTO{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", authorDetails=" + (authorDetails != null ? authorDetails.toString() : "null") +
+                ", authorDetailsDTO=" + (authorDetailsDTO != null ? authorDetailsDTO.toString() : "null") +
                 ", books=" + books +
                 '}';
     }

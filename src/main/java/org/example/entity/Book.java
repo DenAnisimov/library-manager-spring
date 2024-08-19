@@ -44,6 +44,10 @@ public class Book {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -70,6 +74,10 @@ public class Book {
 
     public Set<Genre> getGenres() {
         return genres;
+    }
+
+    public void setGenres(Set<Genre> genres) {
+        this.genres = genres;
     }
 
     @Override

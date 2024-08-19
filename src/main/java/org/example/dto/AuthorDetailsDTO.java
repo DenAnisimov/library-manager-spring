@@ -1,26 +1,18 @@
-package org.example.entity;
-
-import jakarta.persistence.*;
+package org.example.dto;
 
 import java.util.Objects;
 
-@Entity
-@Table(name = "author_details")
-public class AuthorDetails {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class AuthorDetailsDTO {
     private Long id;
 
-    @Column(name = "life_years")
     private String lifeYears;
 
-    @Column(name = "brief_biography")
     private String briefBiography;
 
-    public AuthorDetails() {
+    public AuthorDetailsDTO() {
     }
 
-    public AuthorDetails(String lifeYears, String briefBiography) {
+    public AuthorDetailsDTO(String lifeYears, String briefBiography) {
         this.lifeYears = lifeYears;
         this.briefBiography = briefBiography;
     }
@@ -52,7 +44,7 @@ public class AuthorDetails {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof AuthorDetails that)) return false;
+        if (!(o instanceof AuthorDetailsDTO that)) return false;
         return Objects.equals(id, that.id) && Objects.equals(lifeYears, that.lifeYears) && Objects.equals(briefBiography, that.briefBiography);
     }
 
@@ -63,7 +55,7 @@ public class AuthorDetails {
 
     @Override
     public String toString() {
-        return "AuthorDetails{" +
+        return "AuthorDetailsDTO{" +
                 "id=" + id +
                 ", lifeYears='" + lifeYears + '\'' +
                 ", briefBiography='" + briefBiography + '\'' +
